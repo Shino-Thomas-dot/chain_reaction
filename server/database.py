@@ -28,3 +28,19 @@ def save_game(board, current_player, winner=None):
     )
     conn.commit()
     conn.close()
+
+def load_latest_game():
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT board, current_player, winner
+        FROM games
+        ORDER BY game_id DESC
+        LIMIT 1
+    """)
+    row = cur.fetchone()
+    conn.close()
+
+    if row:
+        return json.loads(row[0]), row[1], row[2]
+    return None, None, None

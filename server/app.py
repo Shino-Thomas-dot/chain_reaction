@@ -1,50 +1,73 @@
-import socket
-import threading
 import json
-from config import HOST, PORT
-from database import init_db
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from game_logic import create_empty_board, apply_move, check_winner
+from database import init_db, save_game, load_latest_game
 
-clients = []
-current_player = 1
+app = FastAPI()
 
-board = [[0]*3 for _ in range(3)]
+# Global move counter (server authoritative)
+move_count = 0
 
-def handle_client(conn, addr):
-    global current_player
-    print("Connected:", addr)
-
-    player_id = len(clients) + 1
-    clients.append(conn)
-
-    conn.send(json.dumps({
-        "action": "assign",
-        "player": player_id
-    }).encode())
-
-    while True:
-        try:
-            data = conn.recv(1024).decode()
-            if not data:
-                break
-            msg = json.loads(data)
-            print("Received:", msg)
-
-        except:
-            break
-
-    conn.close()
-
-def start_server():
+@app.on_event("startup")
+def startup():
     init_db()
-    s = socket.socket()
-    s.bind((HOST, PORT))
-    s.listen(2)
 
-    print(f"Server running on {PORT}")
+@app.websocket("/ws")
+async def websocket_endpoint(ws: WebSocket):
+    global move_count
+    await ws.accept()
 
-    while True:
-        conn, addr = s.accept()
-        threading.Thread(target=handle_client, args=(conn, addr)).start()
+    board, current_player, winner = load_latest_game()
 
-if __name__ == "__main__":
-    start_server()
+    # If no saved game, start fresh
+    if board is None:
+        board = create_empty_board()
+        current_player = 1
+        winner = None
+        move_count = 0
+
+    # Send initial state
+    await ws.send_text(json.dumps({
+        "board": board,
+        "current_player": current_player,
+        "winner": winner
+    }))
+
+    try:
+        while True:
+            data = json.loads(await ws.receive_text())
+
+            # Game already finished
+            if winner:
+                continue
+
+            player = data["player"]
+            row = data["row"]
+            col = data["col"]
+
+            # Enforce turn order
+            if player != current_player:
+                await ws.send_text(json.dumps({"error": "Not your turn"}))
+                continue
+
+            new_board = apply_move(board, player, row, col)
+            if new_board is None:
+                await ws.send_text(json.dumps({"error": "Invalid move"}))
+                continue
+
+            board = new_board
+            move_count += 1
+
+            winner = check_winner(board, move_count)
+            current_player = 2 if current_player == 1 else 1
+
+            save_game(board, current_player, winner)
+
+            await ws.send_text(json.dumps({
+                "board": board,
+                "current_player": current_player,
+                "winner": winner
+            }))
+
+    except WebSocketDisconnect:
+        print("Client disconnected")
