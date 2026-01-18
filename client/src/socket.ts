@@ -1,3 +1,3 @@
-const ws = new WebSocket("ws://127.0.0.1:8000/ws");
+// const ws = new WebSocket("ws://127.0.0.1:8000/ws");
 
-export default ws;
+// export default ws;
