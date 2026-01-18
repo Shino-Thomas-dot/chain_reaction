@@ -1,0 +1,8 @@
+'''SQL
+CREATE TABLE IF NOT EXISTS games (
+    game_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    board TEXT NOT NULL,
+    current_player INTEGER NOT NULL,
+    winner INTEGER,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

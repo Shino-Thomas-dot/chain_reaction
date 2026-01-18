@@ -1,0 +1,31 @@
+{
+  "client_to_server": {
+    "connect": {
+      "action": "connect"
+    },
+    "move": {
+      "action": "move",
+      "player": 1,
+      "row": 0,
+      "col": 2
+    }
+  },
+  "server_to_client": {
+    "assign_player": {
+      "action": "assign",
+      "player": 1
+    },
+    "game_update": {
+      "board": [
+        [0, 1, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+      ],
+      "next_player": 2,
+      "winner": null
+    },
+    "error": {
+      "error": "Invalid move"
+    }
+  }
+}

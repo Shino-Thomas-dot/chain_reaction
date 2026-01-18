@@ -1,0 +1,12 @@
++-------------------+        Socket(JSON)        +---------------------+
+|  Mobile Client 1  | <-----------------------> |                     |
+|  React Native     |                           |   Python Game Server|
++-------------------+                           |   (Logic + Validation)
+                                                |                     |
++-------------------+                           +----------+----------+
+|  Mobile Client 2  |                                      |
+|  React Native     |                                      |
++-------------------+                                      |
+                                                           |
+                                                     SQLite Database
+                                                     (Game State)

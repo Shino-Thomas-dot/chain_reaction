@@ -1,0 +1,66 @@
+# =====================
+# General
+# =====================
+.DS_Store
+Thumbs.db
+*.log
+
+# =====================
+# Python (Server)
+# =====================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+venv/
+env/
+.venv/
+
+# SQLite database
+server/*.db
+server/*.sqlite
+server/*.sqlite3
+
+# =====================
+# Node / React Native (Client)
+# =====================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Expo
+.expo/
+.expo-shared/
+web-build/
+
+# React Native build
+android/
+ios/
+
+# =====================
+# IDEs
+# =====================
+.vscode/
+.idea/
+*.iml
+
+# =====================
+# OS files
+# =====================
+*.swp
+*.swo
+
+# =====================
+# Temporary / build
+# =====================
+dist/
+build/
+coverage/
+
+# =====================
+# Secrets
+# =====================
+*.env
+*.key
