@@ -22,7 +22,6 @@ Python Game Server
 
 ## Project Folder Structure
 
-```text
 chain-reaction-game/
 ├── server/        # Backend (Chrislo) – game logic, socket server, database
 ├── client/        # Mobile App (Shino) – React Native UI & socket client
