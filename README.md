@@ -20,15 +20,13 @@ Python Game Server
 
 ---
 
-## Folder Structure
+## Project Folder Structure
 
 chain-reaction-game/
-│
-├── server/        # Backend (Chrislo)
-├── client/        # Mobile App (Shino)
-├── protocol/      # Socket message contracts
-├── docs/          # Diagrams & schema
-└── README.md
+1. server/        # Backend (Chrislo) – game logic, socket server, database
+2. client/        # Mobile App (Shino) – React Native UI & socket client
+3. protocol/      # Socket message contracts (JSON)
+4. docs/          # Architecture diagrams & database schema
 
 ---
 
