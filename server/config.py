@@ -1,3 +1,2 @@
-HOST = "0.0.0.0"
-PORT = 5000
-DB_NAME = "game.db"
+DB_NAME = "chain_reaction.db"
+GRID_SIZE = 3
