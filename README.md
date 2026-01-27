@@ -34,7 +34,7 @@ chain-reaction-game/
 
 - Backend: Python 3, socket, threading
 - Database: SQLite
-- Frontend: React Native (Expo)
+- Frontend: React Native, CSS
 
 ---
 
@@ -42,6 +42,14 @@ chain-reaction-game/
 
 ### Server
 ```bash
-cd server
+cd ../server
 pip install -r requirements.txt
 python app.py
+```
+
+### Client
+```bash
+cd ../client
+npm install
+npm run dev
+```
